@@ -64,7 +64,7 @@ const ActionButton = ({ action }: ActionProps) => {
       onClick={handleClick}
       size="sm"
       variant="ghost"
-      className="text-muted-foreground"
+      className="text-muted-foreground bg-[#F5145F] hover:bg-[#F5145F]"
       disabled={loading || isRunning}
     >
       {icon}

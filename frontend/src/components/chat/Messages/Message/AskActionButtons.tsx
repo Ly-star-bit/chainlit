@@ -35,6 +35,7 @@ const AskActionButton = ({ action }: { action: IAction }) => {
         askUser?.callback(action);
       }}
       variant="outline"
+      className="text-muted-foreground bg-[#F5145F] hover:bg-[#F5145F]"
       disabled={loading}
     >
       {icon}
