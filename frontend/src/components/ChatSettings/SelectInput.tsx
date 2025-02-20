@@ -1,6 +1,9 @@
 import { IInput } from '@/types';
 import * as React from 'react';
+import { useState } from 'react';
 
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
   SelectContent,
@@ -40,6 +43,12 @@ const SelectInput = ({
   placeholder = 'Select',
   className
 }: SelectInputProps) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredItems = items.filter((item) =>
+    item.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <InputStateHandler
       id={id}
@@ -60,19 +69,29 @@ const SelectInput = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {items.map((item) => (
-            <SelectItem key={item.value} value={item.value.toString()}>
-              <div className="flex items-center gap-2">
-                {item.icon}
-                <span>{item.label}</span>
-                {item.notificationCount && (
-                  <span className="ml-auto bg-muted rounded-full px-2 py-0.5 text-xs">
-                    {item.notificationCount}
-                  </span>
-                )}
-              </div>
-            </SelectItem>
-          ))}
+          <div className="p-2">
+            <Input
+              placeholder="搜索..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="mb-2"
+            />
+          </div>
+          <ScrollArea className="h-[200px]">
+            {filteredItems.map((item) => (
+              <SelectItem key={item.value} value={item.value.toString()}>
+                <div className="flex items-center gap-2">
+                  {item.icon}
+                  <span>{item.label}</span>
+                  {item.notificationCount && (
+                    <span className="ml-auto bg-muted rounded-full px-2 py-0.5 text-xs">
+                      {item.notificationCount}
+                    </span>
+                  )}
+                </div>
+              </SelectItem>
+            ))}
+          </ScrollArea>
         </SelectContent>
       </Select>
     </InputStateHandler>
